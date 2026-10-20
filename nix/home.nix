@@ -54,9 +54,17 @@
 
   xdg.userDirs = {
     enable = true;
-    createDirectories = false;
-    setSessionVariables = false;
-    download = "$HOME/downloads";
+    createDirectories = true;
+    setSessionVariables = true;
+    download = "${config.home.homeDirectory}/downloads";
+    pictures = "${config.home.homeDirectory}/2_media/TOSORT";
+    videos = "${config.home.homeDirectory}/2_media/TOSORT";
+    music = "${config.home.homeDirectory}/2_media/TOSORT";
+    desktop = "${config.home.homeDirectory}/4_inbox/0_desktop"; 
+    documents = "${config.home.homeDirectory}/4_inbox/1_inbox"; 
+    projects = "${config.home.homeDirectory}/4_inbox/1_inbox"; 
+    templates = "${config.home.homeDirectory}/4_inbox/1_inbox"; 
+    publicShare = "${config.home.homeDirectory}/4_inbox/1_inbox"; 
   };
 
   programs.home-manager.enable = true;

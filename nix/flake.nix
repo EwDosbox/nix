@@ -16,21 +16,36 @@
   };
 
   outputs = { self, nixpkgs, home-manager, zen-browser, ... }@inputs: {
-    nixosConfigurations.hartie-pc = nixpkgs.lib.nixosSystem {
-      system = "x86_64-linux";
-      specialArgs = { inherit inputs; };
-      modules = [
-        ./hardware-configuration.nix
-        ./configuration.nix
+    nixosConfigurations = {
+      hartie-pc = nixpkgs.lib.nixosSystem {
+        system = "x86_64-linux";
+        specialArgs = { inherit inputs; deviceName = "hartie-pc"; };
+        modules = [ 
+          ./configuration.nix
+          home-manager.nixosModules.home-manager {
+            home-manager.useGlobalPkgs = true;
+            home-manager.useUserPackages = true;
+            home-manager.backupFileExtension = "backup";
+            home-manager.extraSpecialArgs = { inherit inputs; };
+            home-manager.users.hartie = import ./home.nix;
+          }
+        ];
+    };
+      hartie-laptop = nixpkgs.lib.nixosSystem {
+        system = "x86_64-linux";
+        specialArgs = { inherit inputs; deviceName = "hartie-laptop";};
+        modules = [ 
+          ./configuration.nix
 
-        home-manager.nixosModules.home-manager {
-          home-manager.useGlobalPkgs = true;
-          home-manager.useUserPackages = true;
-          home-manager.backupFileExtension = "backup";
-          home-manager.extraSpecialArgs = { inherit inputs; };
-          home-manager.users.hartie = import ./home.nix;
-        }
-      ];
+          home-manager.nixosModules.home-manager {
+            home-manager.useGlobalPkgs = true;
+            home-manager.useUserPackages = true;
+            home-manager.backupFileExtension = "backup";
+            home-manager.extraSpecialArgs = { inherit inputs; };
+            home-manager.users.hartie = import ./home.nix;
+          }
+        ];
+      };
     };
   };
 }
