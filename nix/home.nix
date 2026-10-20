@@ -30,7 +30,7 @@
     package = pkgs.swayfx;
     checkConfig = false;
 
-    extraConfig = builtins.readFile ./sway.conf;
+    extraConfig = builtins.readFile ./../dots/sway.conf;
   };
 
   services.udiskie = {
