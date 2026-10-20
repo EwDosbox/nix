@@ -17,25 +17,100 @@ in
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
   nixpkgs.config.allowUnfree = true;
 
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
+  boot.loader = {
+    systemd-boot.enable = true;
+    efi.canTouchEfiVariables = true;
+  };
 
-  networking.hostName = "${deviceName}";
-  networking.networkmanager.enable = true;
+  networking = {
+    hostName = "${deviceName}";
+    networkmanager.enable = true;
+  };
 
-  hardware.bluetooth.enable = true;
-  hardware.bluetooth.powerOnBoot = true;
-  services.blueman.enable = true;
+  hardware = {
+    bluetooth = {
+      enable = true;
+      powerOnBoot = true;
+    };
+    graphics = {
+      enable = true;
+      enable32Bit = true;
+      extraPackages = with pkgs; [
+        intel-media-driver
+        vpl-gpu-rt
+      ];
+    };
+  };
 
-  services.libinput = {
-    enable = true;
-    touchpad.naturalScrolling = true;
+  services = {
+    blueman.enable = true;
+
+    libinput = {
+      enable = true;
+      touchpad.naturalScrolling = true;
+    };
+
+    xserver.enable = true;
+    xserver.displayManager.lightdm.enable = true;
+
+    udisks2.enable = true;
+    gvfs.enable = true;
+
+    syncthing = {
+      enable = true;
+      user = "hartie";
+      dataDir = "/home/hartie";
+      openDefaultPorts = true;
+
+      settings = {
+        devices = {
+          "phone" = { id = deviceIds.phone; };
+          "peer-device" = { # If we are on the PC, add the laptop as a peer. If on the laptop, add the PC.
+            id = if deviceName == "pc" then deviceIds.laptop else deviceIds.pc; 
+          };
+        };
+
+        folders = {
+          "media-files" = {
+            path = "/home/hartie/2_media";
+            devices = [ "phone" ];
+          };
+          "uni-files" = {
+            path = "/home/hartie/3_uni";
+            devices = [ "phone" "peer-device" ];
+          };
+          "rest-files" = {
+            path = "/home/hartie/4_inbox";
+            devices = [ "phone" "peer-device" ];
+          };
+        };
+      };
+    };
+
+    pipewire = {
+      enable = true;
+      pulse.enable = true;
+      alsa.enable = true;
+      jack.enable = true;
+    };
   };
 
   time.timeZone = "Europe/Prague";
-  i18n.defaultLocale = "en_US.UTF-8";
+  i18n = {
+    defaultLocale = "en_US.UTF-8";
+    extraLocaleSettings = {
+      LC_ADDRESS = "cs_CZ.UTF-8";
+      LC_IDENTIFICATION = "cs_CZ.UTF-8";
+      LC_MEASUREMENT = "cs_CZ.UTF-8";
+      LC_MONETARY = "cs_CZ.UTF-8";
+      LC_NAME = "cs_CZ.UTF-8";
+      LC_NUMERIC = "cs_CZ.UTF-8";
+      LC_PAPER = "cs_CZ.UTF-8";
+      LC_TELEPHONE = "cs_CZ.UTF-8";
+      LC_TIME = "cs_CZ.UTF-8";
+    };
+  };
 
-  programs.fish.enable = true;
 
   users.users.hartie = {
     isNormalUser = true;
@@ -43,89 +118,60 @@ in
     extraGroups = [ "networkmanager" "wheel" "video" "audio" ];
     shell = pkgs.fish;
   };
-
-  services.xserver.enable = true;
-  services.xserver.displayManager.lightdm.enable = true;
-
-  services.udisks2.enable = true;
-  services.gvfs.enable = true;
-
-  services.syncthing = {
-    enable = true;
-    user = "hartie";
-    dataDir = "/home/hartie";
-    openDefaultPorts = true;
-
-    settings = {
-      devices = {
-        "phone" = { id = deviceIds.phone; };
-        "peer-device" = { # If we are on the PC, add the laptop as a peer. If on the laptop, add the PC.
-          id = if deviceName == "pc" then deviceIds.laptop else deviceIds.pc; 
-        };
-      };
-
-      folders = {
-        "media-files" = {
-          path = "/home/hartie/2_media";
-          devices = [ "phone" ];
-        };
-        "uni-files" = {
-          path = "/home/hartie/3_uni";
-          devices = [ "phone" "peer-device" ];
-        };
-        "rest-files" = {
-          path = "/home/hartie/4_inbox";
-          devices = [ "phone" "peer-device" ];
-        };
-      };
-    };
-  };
   
+  programs = {
+    fish.enable = true;
 
-  programs.sway = {
-    enable = true;
-    package = pkgs.swayfx;
-    wrapperFeatures.gtk = true;
+    sway = {
+      enable = true;
+      package = pkgs.swayfx;
+      wrapperFeatures.gtk = true;
+    };
+
+    steam = {
+      enable = true;
+    };
   };
 
   security.rtkit.enable = true;
-  services.pipewire = {
-    enable = true;
-    pulse.enable = true;
-    alsa.enable = true;
-    jack.enable = true;
-  };
 
-  programs.steam = {
-      enable = true;
+  environment = {
+    systemPackages = with pkgs; [
+        # Enviroment
+        fuzzel
+        waybar
+        mako
+        pavucontrol
+        betterlockscreen
+        # Drivers and such
+        bluez
+        bluez-tools
+        bluez-alsa
+        wl-clipboard
+        playerctl
+        brightnessctl
+        networkmanagerapplet
+        # Development
+        ghc
+        dotnet-sdk
+        gcc
+        python3
+        # Terminal
+        git
+        foot
+        wget
+        curl
+        micro
+        fastfetch
+        htop
+        btop
+        tree
+        qalculate-qt
+        # Apps
+        vscode
+    ];
+    variables.BROWSER = "zen";
   };
-
-  environment.systemPackages = with pkgs; [
-    # Enviroment
-    fuzzel
-    waybar
-    mako
-    pavucontrol
-    wl-clipboard
-    brightnessctl
-    networkmanagerapplet
-    kanshi
-    # Development
-    ghc
-    dotnet-sdk
-    gcc
-    python3
-    # Terminal
-    git
-    foot
-    wget
-    curl
-    micro
-    fastfetch
-    htop
-    # Apps
-    vscode
- ];
 
   system.stateVersion = "24.11";
 }
