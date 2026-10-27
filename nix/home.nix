@@ -8,8 +8,6 @@
     packages = with pkgs; [
       inputs.zen-browser.packages.${pkgs.system}.default
 
-      imagej
-
       krita
       digikam
       xnviewmp
