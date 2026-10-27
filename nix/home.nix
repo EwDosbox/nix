@@ -28,12 +28,8 @@
       source = ./../scripts/mkdev.sh;
       executable = true;
     };
-    file.".local/bin/update-nix" = {
+    file.".local/bin/update" = {
       source = ./../scripts/update.sh;
-      executable = true;
-    };
-    file.".local/bin/imagej-dev" = {
-      source = ./../scripts/imagej-dev.sh;
       executable = true;
     };
 
