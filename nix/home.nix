@@ -1,29 +1,44 @@
 { config, pkgs, inputs, ... }:
 
 {
-  home.username = "hartie";
-  home.homeDirectory = "/home/hartie";
+  home = {
+    username = "hartie";
+    homeDirectory = "/home/hartie";
 
-  home.packages = with pkgs; [
-    inputs.zen-browser.packages.${pkgs.system}.default
+    packages = with pkgs; [
+      inputs.zen-browser.packages.${pkgs.system}.default
 
-    imagej
+      imagej
 
-    krita
-    digikam
-    xnviewmp
-    obsidian
-    vlc
-    vesktop # Discord
-    megacmd # MegaSync
-    thunar # File
-    # Spotify
-    librespot 
-    spotify-qt
-    # Git
-    lazygit
-    gh
-  ];
+      krita
+      digikam
+      xnviewmp
+      obsidian
+      vlc
+      vesktop # Discord
+      megacmd # MegaSync
+      thunar # File
+      # Spotify
+      librespot 
+      spotify-qt
+      # Git
+      lazygit
+      gh
+    ];
+
+    file.".local/bin/mkdev" = {
+      source = ./../scripts/mkdev.sh;
+      executable = true;
+    };
+    file.".local/bin/update" = {
+      source = ./../scripts/update.sh;
+      executable = true;
+    };
+
+    sessionPath = [
+      "$HOME/.local/bin"
+    ];
+  };
 
   wayland.windowManager.sway = {
     enable = true;
