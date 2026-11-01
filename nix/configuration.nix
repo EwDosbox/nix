@@ -7,6 +7,7 @@ let
     phone = "YDBKFQM-BFEIWUD-O6UXCKJ-7KVZK6U-TT7VYW4-TJHUSDB-QO4GFIX-REHMDQJ";
     pc = "MHLZOIS-3UXFVLD-2GRZVPL-LZB57JC-AN2K7ZC-34UIVW7-46Q5MET-BH5PWAV";
     laptop = "2WLQ2E2-ZCI7J2B-FQNNKF5-UHZ7DA2-X3DB4ZR-ARESHBT-AFSV4VV-LYOHMQE";
+    kot = "LZOUY6H-EF6OQX7-VTN26U5-KPGXV5Q-562CLCU-CXUMVJB-V5A6FNT-4K5YDQV";
   };
 in
 {
@@ -65,6 +66,7 @@ in
       settings = {
         devices = {
           "phone" = { id = deviceIds.phone; };
+          "kot" = { id = deviceIds.kot; };
           "peer-device" = { # If we are on the PC, add the laptop as a peer. If on the laptop, add the PC.
             id = if deviceName == "pc" then deviceIds.laptop else deviceIds.pc; 
           };
@@ -83,6 +85,10 @@ in
             path = "/home/hartie/4_inbox";
             devices = [ "phone" "peer-device" ];
           };
+          "share-kot" = {
+            path = "/home/hartie/5_share/1_kot";
+            devices = [ "kot" ];
+          };
         };
       };
     };
@@ -92,6 +98,11 @@ in
       pulse.enable = true;
       alsa.enable = true;
       jack.enable = true;
+    };
+
+    mysql = {
+      enable = true;
+      package = pkgs.mariadb;
     };
   };
 
@@ -167,8 +178,10 @@ in
         btop
         tree
         qalculate-qt
+        unzip
         # Apps
         vscode
+        mariadb # For Digikam
     ];
     variables.BROWSER = "zen";
   };
