@@ -1,6 +1,9 @@
-{ config, pkgs, inputs, ... }:
-
 {
+  config,
+  pkgs,
+  inputs,
+  ...
+}: {
   home = {
     username = "hartie";
     homeDirectory = "/home/hartie";
@@ -10,6 +13,14 @@
       vlc
       vesktop # Discord
       inputs.zen-browser.packages.${pkgs.system}.default
+      telegram-desktop
+
+      #VSCodium
+      vscodium
+      ruff
+      clang-tools
+      alejandra
+      jdk
 
       # Photo
       krita
@@ -19,9 +30,11 @@
       # File
       obsidian
       thunar
+
       # Spotify
-      librespot 
+      librespot
       spotify-qt
+
       # Git
       lazygit
       gh
@@ -60,7 +73,6 @@
     };
 
     ssh-agent.enable = true;
-
   };
 
   programs = {
@@ -105,6 +117,83 @@
         };
       };
     };
+
+    vscodium = {
+      enable = true;
+
+      profiles.default = {
+        userSettings = {
+          "telemetry.enableTelemetry" = false;
+          "telemetry.telemetryLevel" = "off";
+          "crashReporter.enabled" = false;
+          "update.mode" = "none";
+
+          "editor.fontSize" = 14;
+          "editor.fontFamily" = "'JetBrainsMono Nerd Font', 'monospace', monospace";
+          "editor.formatOnSave" = true;
+          "editor.tabSize" = 4;
+          "files.autoSave" = "onFocusChange";
+
+          "editor.quickSuggestions" = {
+            "other" = "on";
+            "comments" = "off";
+            "strings" = "on";
+          };
+          "editor.suggestOnTriggerCharacters" = true;
+          "editor.wordBasedSuggestions" = "matchingDocuments";
+
+          "[python]" = {"editor.defaultFormatter" = "charliermarsh.ruff";};
+          "[html]" = {"editor.defaultFormatter" = "esbenp.prettier-vscode";};
+          "[css]" = {"editor.defaultFormatter" = "esbenp.prettier-vscode";};
+          "[javascript]" = {"editor.defaultFormatter" = "esbenp.prettier-vscode";};
+          "[json]" = {"editor.defaultFormatter" = "esbenp.prettier-vscode";};
+          "[cpp]" = {"editor.defaultFormatter" = "llvm-vs-code-extensions.vscode-clangd";};
+          "[nix]" = {"editor.defaultFormatter" = "kamadorueda.alejandra";};
+
+          "workbench.colorTheme" = "realeinar.theme-dracula-midnight";
+          "workbench.iconTheme" = "material-icon-theme";
+
+          "terminal.integrated.fontFamily" = "JetBrainsMono Nerd Font";
+        };
+
+        keybindings = [
+          {
+            key = "ctrl+alt+f";
+            command = "editor.action.formatDocument";
+          }
+        ];
+
+        extensions = with pkgs.vscode-extensions; [
+          # General
+          arcticicestudio.nord-visual-studio-code
+          pkief.material-icon-theme
+          tomoki1207.pdf
+          # Nix
+          bbenoist.nix
+          kamadorueda.alejandra
+          # Python
+          ms-python.python
+          charliermarsh.ruff
+          # C#
+          ms-dotnettools.csharp
+          # C++
+          llvm-vs-code-extensions.vscode-clangd
+          # Java
+          redhat.java
+          # Web
+          ritwickdey.liveserver
+          esbenp.prettier-vscode
+          # Godot
+          geequlim.godot-tools
+          # PV004
+          ms-vscode.cmake-tools
+          # PB130
+          oracle.oracle-java
+          # PB016
+          ms-toolsai.jupyter
+        ];
+      };
+    };
   };
 
   xdg = {
@@ -113,8 +202,8 @@
       comment = "Graphic file viewer and converter";
       exec = "xnviewmp %F";
       terminal = false;
-      categories = [ "Graphics" "Viewer" ];
-      mimeType = [ "image/jpeg" "image/png" "image/gif" "image/tiff" "image/webp" ];
+      categories = ["Graphics" "Viewer"];
+      mimeType = ["image/jpeg" "image/png" "image/gif" "image/tiff" "image/webp"];
     };
 
     userDirs = {
@@ -125,11 +214,11 @@
       pictures = "${config.home.homeDirectory}/2_media/TOSORT";
       videos = "${config.home.homeDirectory}/2_media/TOSORT";
       music = "${config.home.homeDirectory}/2_media/TOSORT";
-      desktop = "${config.home.homeDirectory}/4_inbox/0_desktop"; 
-      documents = "${config.home.homeDirectory}/4_inbox/1_inbox"; 
-      projects = "${config.home.homeDirectory}/4_inbox/1_inbox"; 
-      templates = "${config.home.homeDirectory}/4_inbox/1_inbox"; 
-      publicShare = "${config.home.homeDirectory}/4_inbox/1_inbox"; 
+      desktop = "${config.home.homeDirectory}/4_inbox/0_desktop";
+      documents = "${config.home.homeDirectory}/4_inbox/1_inbox";
+      projects = "${config.home.homeDirectory}/4_inbox/1_inbox";
+      templates = "${config.home.homeDirectory}/4_inbox/1_inbox";
+      publicShare = "${config.home.homeDirectory}/4_inbox/1_inbox";
     };
   };
 

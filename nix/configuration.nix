@@ -1,21 +1,24 @@
-{ config, lib, pkgs, inputs, deviceName, ... }:
-
-with lib;
-
-let
+{
+  config,
+  lib,
+  pkgs,
+  inputs,
+  deviceName,
+  ...
+}:
+with lib; let
   deviceIds = {
     phone = "YDBKFQM-BFEIWUD-O6UXCKJ-7KVZK6U-TT7VYW4-TJHUSDB-QO4GFIX-REHMDQJ";
     pc = "MHLZOIS-3UXFVLD-2GRZVPL-LZB57JC-AN2K7ZC-34UIVW7-46Q5MET-BH5PWAV";
     laptop = "2WLQ2E2-ZCI7J2B-FQNNKF5-UHZ7DA2-X3DB4ZR-ARESHBT-AFSV4VV-LYOHMQE";
     kot = "LZOUY6H-EF6OQX7-VTN26U5-KPGXV5Q-562CLCU-CXUMVJB-V5A6FNT-4K5YDQV";
   };
-in
-{
+in {
   imports = [
     ./hardware-configuration.nix
   ];
 
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+  nix.settings.experimental-features = ["nix-command" "flakes"];
   nixpkgs.config.allowUnfree = true;
 
   boot.loader = {
@@ -65,29 +68,37 @@ in
 
       settings = {
         devices = {
-          "phone" = { id = deviceIds.phone; };
-          "kot" = { id = deviceIds.kot; };
-          "peer-device" = { # If we are on the PC, add the laptop as a peer. If on the laptop, add the PC.
-            id = if deviceName == "pc" then deviceIds.laptop else deviceIds.pc; 
+          "phone" = {id = deviceIds.phone;};
+          "kot" = {id = deviceIds.kot;};
+          "peer-device" = {
+            # If we are on the PC, add the laptop as a peer. If on the laptop, add the PC.
+            id =
+              if deviceName == "pc"
+              then deviceIds.laptop
+              else deviceIds.pc;
           };
         };
 
         folders = {
           "media-files" = {
             path = "/home/hartie/2_media";
-            devices = [ "phone" ];
+            devices = ["phone"];
           };
           "uni-files" = {
             path = "/home/hartie/3_uni";
-            devices = [ "phone" "peer-device" ];
+            devices = ["phone" "peer-device"];
           };
           "rest-files" = {
             path = "/home/hartie/4_inbox";
-            devices = [ "phone" "peer-device" ];
+            devices = ["phone" "peer-device"];
           };
           "share-kot" = {
             path = "/home/hartie/5_share/1_kot";
-            devices = [ "kot" ];
+            devices = ["kot"];
+          };
+          "share-hartie" = {
+            path = "/home/hartie/5_share/2_hartie";
+            devices = ["phone"];
           };
         };
       };
@@ -122,14 +133,13 @@ in
     };
   };
 
-
   users.users.hartie = {
     isNormalUser = true;
     description = "hartie";
-    extraGroups = [ "networkmanager" "wheel" "video" "audio" ];
+    extraGroups = ["networkmanager" "wheel" "video" "audio"];
     shell = pkgs.fish;
   };
-  
+
   programs = {
     fish.enable = true;
 
@@ -148,42 +158,77 @@ in
 
   environment = {
     systemPackages = with pkgs; [
-        # Enviroment
-        fuzzel
-        waybar
-        mako
-        pavucontrol
-        betterlockscreen
-        # Drivers and such
-        bluez
-        bluez-tools
-        bluez-alsa
-        wl-clipboard
-        playerctl
-        brightnessctl
-        networkmanagerapplet
-        # Development
-        ghc
-        dotnet-sdk
-        gcc
-        python3
-        # Terminal
-        git
-        foot
-        wget
-        curl
-        micro
-        fastfetch
-        htop
-        btop
-        tree
-        qalculate-qt
-        unzip
-        # Apps
-        vscode
-        mariadb # For Digikam
+      # Enviroment
+      fuzzel
+      waybar
+      mako
+      pavucontrol
+      betterlockscreen
+      # Dark Theme
+      adwaita-qt
+      adwaita-icon-theme
+      glib
+      # Drivers and such
+      bluez
+      bluez-tools
+      bluez-alsa
+      wl-clipboard
+      playerctl
+      brightnessctl
+      networkmanagerapplet
+      # Development
+      ghc
+      dotnet-sdk
+      gcc
+      python3
+      # Terminal
+      git
+      foot
+      wget
+      curl
+      micro
+      fastfetch
+      htop
+      btop
+      tree
+      qalculate-qt
+      unzip
+      # Apps
+      mariadb # For Digikam
     ];
+
     variables.BROWSER = "zen";
+
+    # Dark Mode
+    sessionVariables = {
+      GTK_THEME = "Adwaita:dark";
+
+      QT_QPA_PLATFORMTHEME = "qt5ct";
+      QT_STYLE_OVERRIDE = "adwaita-dark";
+
+      MOZ_ENABLE_WAYLAND = "1";
+    };
+
+    etc."gtk-3.0/settings.ini".text = ''
+      [Settings]
+      gtk-application-prefer-dark-theme=1
+      gtk-theme-name=Adwaita-dark
+    '';
+
+    etc."gtk-4.0/settings.ini".text = ''
+      [Settings]
+      gtk-application-prefer-dark-theme=1
+      gtk-theme-name=Adwaita-dark
+    '';
+  };
+
+  xdg.portal = {
+    enable = true;
+    extraPortals = with pkgs; [
+      xdg-desktop-portal-gtk
+      xdg-desktop-portal-wlr
+    ];
+    config.common.default = "*";
   };
 
   system.stateVersion = "24.11";
