@@ -149,7 +149,7 @@
           "[cpp]" = {"editor.defaultFormatter" = "llvm-vs-code-extensions.vscode-clangd";};
           "[nix]" = {"editor.defaultFormatter" = "kamadorueda.alejandra";};
 
-          "workbench.colorTheme" = "Dracula";
+          "workbench.colorTheme" = "Dracula Theme Soft";
           "workbench.iconTheme" = "material-icon-theme";
 
           "terminal.integrated.fontFamily" = "JetBrainsMono Nerd Font";
