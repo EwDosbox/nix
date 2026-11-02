@@ -123,7 +123,6 @@
 
       profiles.default = {
         userSettings = {
-          "telemetry.enableTelemetry" = false;
           "telemetry.telemetryLevel" = "off";
           "crashReporter.enabled" = false;
           "update.mode" = "none";
@@ -150,7 +149,7 @@
           "[cpp]" = {"editor.defaultFormatter" = "llvm-vs-code-extensions.vscode-clangd";};
           "[nix]" = {"editor.defaultFormatter" = "kamadorueda.alejandra";};
 
-          "workbench.colorTheme" = "realeinar.theme-dracula-midnight";
+          "workbench.colorTheme" = "Dracula";
           "workbench.iconTheme" = "material-icon-theme";
 
           "terminal.integrated.fontFamily" = "JetBrainsMono Nerd Font";
@@ -165,7 +164,7 @@
 
         extensions = with pkgs.vscode-extensions; [
           # General
-          arcticicestudio.nord-visual-studio-code
+          dracula-theme.theme-dracula
           pkief.material-icon-theme
           tomoki1207.pdf
           # Nix
