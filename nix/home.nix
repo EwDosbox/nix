@@ -124,7 +124,6 @@
       profiles.default = {
         userSettings = {
           "telemetry.telemetryLevel" = "off";
-          "crashReporter.enabled" = false;
           "update.mode" = "none";
 
           "editor.fontSize" = 14;
