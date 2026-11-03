@@ -115,6 +115,8 @@ in {
       enable = true;
       package = pkgs.mariadb;
     };
+
+    gnome.gnome-keyring.enable = true;
   };
 
   time.timeZone = "Europe/Prague";
@@ -152,6 +154,8 @@ in {
     steam = {
       enable = true;
     };
+
+    nix-ld.enable = true;
   };
 
   security.rtkit.enable = true;
@@ -193,6 +197,7 @@ in {
       tree
       qalculate-qt
       unzip
+      killall
       # Apps
       mariadb # For Digikam
     ];
@@ -220,6 +225,8 @@ in {
       gtk-application-prefer-dark-theme=1
       gtk-theme-name=Adwaita-dark
     '';
+
+    sessionVariables.NIXOS_OZONE_WL = "1";
   };
 
   xdg.portal = {
