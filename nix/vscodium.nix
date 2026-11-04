@@ -22,7 +22,7 @@
         "editor.wordBasedSuggestions" = "matchingDocuments";
 
         "[python]" = {"editor.defaultFormatter" = "charliermarsh.ruff";};
-        "[html]" = {"editor.defaultFormatter" = "esbenp.prettier-vscode";};
+        "[html]" = {"editor.defaultFormatter" = "vscode.html-language-features";};
         "[css]" = {"editor.defaultFormatter" = "esbenp.prettier-vscode";};
         "[javascript]" = {"editor.defaultFormatter" = "esbenp.prettier-vscode";};
         "[json]" = {"editor.defaultFormatter" = "esbenp.prettier-vscode";};
@@ -35,6 +35,10 @@
         "workbench.iconTheme" = "material-icon-theme";
 
         "terminal.integrated.fontFamily" = "JetBrainsMono Nerd Font";
+
+        "explorer.confirmDragAndDrop" = false;
+        "git.confirmSync" = false;
+        "git.suggestSmartCommit" = false;
       };
 
       keybindings = [

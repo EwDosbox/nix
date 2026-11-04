@@ -54,8 +54,11 @@ in {
       touchpad.naturalScrolling = true;
     };
 
-    xserver.enable = true;
-    xserver.displayManager.lightdm.enable = true;
+    xserver = {
+      enable = true;
+      displayManager.lightdm.enable = true;
+      wacom.enable = false;
+    };
 
     udisks2.enable = true;
     gvfs.enable = true;
@@ -168,6 +171,7 @@ in {
       mako
       pavucontrol
       betterlockscreen
+      linux-wallpaperengine
       # Dark Theme
       adwaita-qt
       adwaita-icon-theme
