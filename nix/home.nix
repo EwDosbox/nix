@@ -5,6 +5,7 @@
   ...
 }: {
   imports = [
+    inputs.zen-browser.homeModules.beta
     ./foot.nix
     ./vscodium.nix
   ];
@@ -16,7 +17,6 @@
       # General
       vlc
       vesktop # Discord
-      inputs.zen-browser.packages.${pkgs.system}.default
       telegram-desktop
 
       # Fonts
@@ -28,6 +28,9 @@
       clang-tools
       alejandra
       jdk
+      cmake
+      gcc
+      glslang
 
       # Photo
       krita
@@ -37,10 +40,6 @@
       # File
       obsidian
       thunar
-
-      # Spotify
-      librespot
-      spotify-qt
 
       # Git
       lazygit
@@ -158,6 +157,12 @@
     };
   };
 
-  programs.home-manager.enable = true;
+  programs = {
+    home-manager.enable = true;
+    zen-browser = {
+      enable = true;
+      setAsDefaultBrowser = true;
+    };
+  };
   home.stateVersion = "24.11";
 }

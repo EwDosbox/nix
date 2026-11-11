@@ -38,7 +38,8 @@
 
         "explorer.confirmDragAndDrop" = false;
         "git.confirmSync" = false;
-        "git.suggestSmartCommit" = false;
+        "git.suggestSmartCommit" = true;
+        "cmake.generator" = "Ninja";
       };
 
       keybindings = [
@@ -48,37 +49,58 @@
         }
       ];
 
-      extensions = with pkgs.vscode-extensions; [
-        # General
-        dracula-theme.theme-dracula
-        pkief.material-icon-theme
-        tomoki1207.pdf
-        # Nix
-        bbenoist.nix
-        kamadorueda.alejandra
-        # Python
-        ms-python.python
-        charliermarsh.ruff
-        # C#
-        ms-dotnettools.csharp
-        # C++
-        llvm-vs-code-extensions.vscode-clangd
-        # Java
-        redhat.java
-        # Web
-        ritwickdey.liveserver
-        esbenp.prettier-vscode
-        # Godot
-        geequlim.godot-tools
-        # Haskell
-        haskell.haskell
-        # PV004
-        ms-vscode.cmake-tools
-        # PB130
-        oracle.oracle-java
-        # PB016
-        ms-toolsai.jupyter
-      ];
+      extensions =
+        (with pkgs.vscode-extensions; [
+          # General
+          dracula-theme.theme-dracula
+          pkief.material-icon-theme
+          tomoki1207.pdf
+          # Nix
+          bbenoist.nix
+          kamadorueda.alejandra
+          # Python
+          ms-python.python
+          charliermarsh.ruff
+          # C#
+          ms-dotnettools.csharp
+          # C++
+          llvm-vs-code-extensions.vscode-clangd
+          # Java
+          redhat.java
+          # Web
+          ritwickdey.liveserver
+          esbenp.prettier-vscode
+          # Godot
+          geequlim.godot-tools
+          # Haskell
+          haskell.haskell
+          # PV004
+          ms-vscode.cmake-tools
+          # PB130
+          oracle.oracle-java
+          # PB016
+          ms-toolsai.jupyter
+        ])
+        ++ [
+          # dtoplak.vscode-glsllint
+          (pkgs.vscode-utils.buildVscodeMarketplaceExtension {
+            mktplcRef = {
+              name = "vscode-glsllint";
+              publisher = "dtoplak";
+              version = "1.9.2";
+              sha256 = "sha256-HALX26nx3Fudi20n4azuAfLtInIYp+txbs2utVR394w=";
+            };
+          })
+          # slevesque.shader
+          (pkgs.vscode-utils.buildVscodeMarketplaceExtension {
+            mktplcRef = {
+              name = "shader";
+              publisher = "slevesque";
+              version = "1.1.5";
+              sha256 = "sha256-Pf37FeQMNlv74f7LMz9+CKscF6UjTZ7ZpcaZFKtX2ZM=";
+            };
+          })
+        ];
     };
   };
 }

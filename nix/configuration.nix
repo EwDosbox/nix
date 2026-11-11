@@ -2,6 +2,7 @@
   config,
   lib,
   pkgs,
+  pkgs-unstable,
   inputs,
   deviceName,
   ...
@@ -119,6 +120,21 @@ in {
       package = pkgs.mariadb;
     };
 
+    keyd = {
+      enable = true;
+      keyboards = {
+        wacom_pen = {
+          ids = ["1386:828"];
+          settings = {
+            main = {
+              btn_stylus = "control+z";
+              btn_stylus2 = "control+shift+z";
+            };
+          };
+        };
+      };
+    };
+
     gnome.gnome-keyring.enable = true;
   };
 
@@ -164,47 +180,52 @@ in {
   security.rtkit.enable = true;
 
   environment = {
-    systemPackages = with pkgs; [
-      # Enviroment
-      fuzzel
-      waybar
-      mako
-      pavucontrol
-      betterlockscreen
-      linux-wallpaperengine
-      # Dark Theme
-      adwaita-qt
-      adwaita-icon-theme
-      glib
-      # Drivers and such
-      bluez
-      bluez-tools
-      bluez-alsa
-      wl-clipboard
-      playerctl
-      brightnessctl
-      networkmanagerapplet
-      # Development
-      ghc
-      dotnet-sdk
-      gcc
-      python3
-      # Terminal
-      git
-      foot
-      wget
-      curl
-      micro
-      fastfetch
-      htop
-      btop
-      tree
-      qalculate-qt
-      unzip
-      killall
-      # Apps
-      mariadb # For Digikam
-    ];
+    systemPackages = with pkgs;
+      [
+        # Enviroment
+        fuzzel
+        waybar
+        mako
+        pavucontrol
+        betterlockscreen
+        linux-wallpaperengine
+        # Dark Theme
+        adwaita-qt
+        adwaita-icon-theme
+        glib
+        # Drivers and such
+        bluez
+        bluez-tools
+        bluez-alsa
+        wl-clipboard
+        playerctl
+        brightnessctl
+        networkmanagerapplet
+        # Development
+        ghc
+        dotnet-sdk
+        gcc
+        python3
+        # Terminal
+        git
+        foot
+        wget
+        curl
+        micro
+        fastfetch
+        htop
+        btop
+        tree
+        qalculate-qt
+        unzip
+        killall
+        keyd
+        # Apps
+        mariadb # For Digikam
+      ]
+      ++ (with pkgs-unstable; [
+        spotifast
+      ]);
 
     variables.BROWSER = "zen";
 
