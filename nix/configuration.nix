@@ -197,7 +197,6 @@ in {
         bluez
         bluez-tools
         bluez-alsa
-        wl-clipboard
         playerctl
         brightnessctl
         networkmanagerapplet

@@ -8,6 +8,7 @@
     inputs.zen-browser.homeModules.beta
     ./foot.nix
     ./vscodium.nix
+    ./waybar.nix
   ];
   home = {
     username = "hartie";
@@ -39,11 +40,16 @@
 
       # File
       obsidian
-      thunar
+      kdePackages.dolphin
 
       # Git
       lazygit
       gh
+
+      # Clipboard and Screenshot
+      wl-clipboard
+      grim
+      slurp
     ];
 
     file = {

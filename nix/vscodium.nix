@@ -30,6 +30,7 @@
         "[nix]" = {"editor.defaultFormatter" = "kamadorueda.alejandra";};
         "[haskell]" = {"editor.defaultFormatter" = "haskell.haskell";};
         "[java]" = {"editor.defaultFormatter" = "redhat.java";};
+        "[glsl]" = {"editor.defaultFormatter" = "pablodegroot.glsl-intellisense";};
 
         "workbench.colorTheme" = "Dracula Theme Soft";
         "workbench.iconTheme" = "material-icon-theme";
@@ -40,6 +41,11 @@
         "git.confirmSync" = false;
         "git.suggestSmartCommit" = true;
         "cmake.generator" = "Ninja";
+
+        "glsllint.fallBackStage" = "vert";
+        "glsllint.additionalStageAssociations" = {
+          "glsl" = "vert";
+        };
       };
 
       keybindings = [
@@ -82,6 +88,15 @@
           ms-toolsai.jupyter
         ])
         ++ [
+          #(pkgs.vscode-utils.buildVscodeMarketplaceExtension {mktplcRef = {name = "";publisher = "";version = "";sha256 = "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA";};})
+          (pkgs.vscode-utils.buildVscodeMarketplaceExtension {
+            mktplcRef = {
+              name = "glsl-intellisense";
+              publisher = "pablodegroot";
+              version = "0.4.0";
+              sha256 = "sha256-tjln0r/gdkWYCIz11QGWHPi6d+I1GRB5fMu6rHG2wBc=";
+            };
+          })
           # dtoplak.vscode-glsllint
           (pkgs.vscode-utils.buildVscodeMarketplaceExtension {
             mktplcRef = {
