@@ -1,0 +1,1 @@
+sudo nixos-rebuild switch --flake /home/hartie/1_project/nix/nix/pc-hartie#pc-hartie

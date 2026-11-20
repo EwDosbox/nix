@@ -1,5 +1,5 @@
 /* =============================================================================
- * Waybar Stylesheet
+ * Waybar Stylesheet (Foot Terminal Palette + Courier Prime)
  * =========================================================================== */
 
 * {
@@ -11,37 +11,42 @@
 }
 
 #waybar {
-  color: #eceff4;
-  background-color: rgba(46, 52, 64, 0.6);
-  border-radius: 5px;
-  font-family: JetBrainsMonoNerdFont;
-  font-size: 13px;
+  color: #ffffff;
+  background-color: rgba(0, 0, 0, 0.85);
+  font-family: "Courier Prime", "JetBrainsMono Nerd Font";
+  font-size: 11px;
 }
 
 *:hover {
-  border-radius: 5px;
-  transition: background 0.3s;
+  transition: background 0.2s ease-in-out;
 }
 
 .modules-left > widget:first-child > * {
-  margin-left: 15px;
+  margin-left: 10px;
 }
 
 .modules-right > widget:last-child > * {
-  margin-right: 15px;
+  margin-right: 10px;
+}
+
+tooltip {
+  background: #121212;
+  border: 1px solid #6ca0a3;
+  border-radius: 4px;
 }
 
 tooltip label {
-  font-family: JetBrainsMonoNerdFont;
-  font-size: 13px;
+  font-family: "Courier Prime", "JetBrainsMono Nerd Font";
+  font-size: 11px;
+  color: #ffffff;
 }
 
+/* Base Module Styling */
 #window,
 #network,
 #privacy,
 #custom-updates,
 #custom-pacman,
-#custom-keyboard-layout,
 #cpu,
 #temperature,
 #disk,
@@ -53,26 +58,23 @@ tooltip label {
 #bluetooth,
 #tray,
 #clock,
-#custom-settings,
 #custom-power,
 #custom-reboot,
-#custom-reboot-uefi,
-#custom-log-off,
-#custom-suspend,
 #custom-lock {
-  background: rgba(129, 161, 193, 0.4);
+  background: #121212;
+  color: #ffffff;
   border-radius: 4px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
-  padding: 0.1rem 1rem;
-  margin: 1px 1px;
+  padding: 0.1rem 0.8rem;
+  margin: 2px 2px;
+  border: 1px solid #333333;
 }
 
+/* Hover States using Foot palette accents */
 #window:hover,
 #network:hover,
 #privacy:hover,
 #custom-updates:hover,
 #custom-pacman:hover,
-#custom-keyboard-layout:hover,
 #cpu:hover,
 #temperature:hover,
 #disk:hover,
@@ -83,119 +85,90 @@ tooltip label {
 #backlight:hover,
 #bluetooth:hover,
 #tray:hover,
-#tray .active:hover,
-#clock:hover,
-#custom-settings:hover,
+#clock:hover {
+  background: #1f1f1f;
+  border-color: #6ca0a3;
+}
+
+/* Power Control Hover (Lenovo Red Accent) */
 #custom-power:hover,
 #custom-reboot:hover,
-#custom-reboot-uefi:hover,
-#custom-log-off:hover,
-#custom-suspend:hover,
 #custom-lock:hover {
-  background: rgba(129, 161, 193, 0.8);
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
+  background: #e2231a;
+  color: #ffffff;
+  border-color: #ff332a;
 }
 
-#custom-launcher,
-#window,
 #network {
   background: transparent;
-  box-shadow: none;
+  border: none;
 }
 
-#custom-launcher,
-#custom-power {
-  padding-right: 1.1rem;
-}
-
-#workspaces:hover {
-  background: none;
+#workspaces {
+  background: #121212;
+  border: 1px solid #333333;
+  border-radius: 4px;
+  margin: 2px 2px;
+  padding: 0 4px;
 }
 
 #workspaces button {
-  border-radius: 5px;
+  color: #888888;
+  border-radius: 3px;
   padding: 0px 6px;
-  margin-right: 2px;
-  margin-left: 2px;
+  margin: 2px 1px;
+  font-family: "Courier Prime", "JetBrainsMono Nerd Font";
+}
+
+#workspaces button:hover {
+  background: #1f1f1f;
+  color: #ffffff;
 }
 
 #workspaces button.focused {
-  border: 0.9px solid #eceff4;
+  background: #6ca0a3;
+  color: #000000;
+  font-weight: bold;
 }
 
-#cpu:hover,
-#custom-settings:hover {
-  background-image: url("chevron-right.svg");
-  background-repeat: no-repeat;
-  background-position: right center;
+#workspaces button.urgent {
+  background: #e2231a;
+  color: #ffffff;
 }
 
-#window {
-  border-style: hidden;
-  margin-top: 1px;
-}
-
+/* Status States */
 #privacy {
-  color: #ebcb8b;
-  background: rgba(235, 203, 139, 0.1);
-}
-
-#privacy:hover {
-  color: #ebcb8b;
-  background: rgba(235, 203, 139, 0.3);
+  color: #f5bf3b;
+  background: rgba(245, 191, 59, 0.1);
 }
 
 #wireplumber.muted,
 #bluetooth.off,
 #idle_inhibitor.deactivated {
-  color: #88c0d0;
+  color: #888888;
 }
 
 #cpu.warning,
 #memory.warning,
 #battery.warning {
-  color: #d08770;
-  background: rgba(208, 135, 112, 0.1);
+  color: #f5bf3b;
 }
 
-#cpu.warning:hover,
-#memory.warning:hover,
-#battery.warning:hover {
-  background: rgba(208, 135, 112, 0.3);
-}
-
-#workspaces button.urgent,
-#network.disabled,
-#network.disconnected,
 #cpu.critical,
 #memory.critical,
 #temperature.critical,
 #battery.critical {
-  color: #bf616a;
-  background: rgba(191, 97, 106, 0.1);
-}
-
-#workspaces button.urgent:hover,
-#network.disabled:hover,
-#network.disconnected:hover,
-#cpu.critical:hover,
-#memory.critical:hover,
-#temperature.critical:hover,
-#battery.critical:hover {
-  background: rgba(191, 97, 106, 0.3);
-}
-
-@keyframes blink {
-  to {
-    color: #4c566a;
-    background-color: #eceff4;
-  }
-}
-
-#battery.critical:not(.charging) {
+  color: #e2231a;
   animation-name: blink;
   animation-duration: 0.5s;
   animation-timing-function: linear;
   animation-iteration-count: infinite;
   animation-direction: alternate;
+}
+
+@keyframes blink {
+  to {
+    color: #ffffff;
+    background-color: #e2231a;
+  }
 }

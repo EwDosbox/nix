@@ -15,20 +15,11 @@ with lib; let
     kot = "LZOUY6H-EF6OQX7-VTN26U5-KPGXV5Q-562CLCU-CXUMVJB-V5A6FNT-4K5YDQV";
   };
 in {
-  imports = [
-    ./hardware-configuration.nix
-  ];
-
   nix.settings.experimental-features = ["nix-command" "flakes"];
   nixpkgs.config.allowUnfree = true;
 
-  boot.loader = {
-    systemd-boot.enable = true;
-    efi.canTouchEfiVariables = true;
-  };
-
   networking = {
-    hostName = "${deviceName}";
+    hostName = deviceName;
     networkmanager.enable = true;
   };
 
@@ -37,6 +28,13 @@ in {
       enable = true;
       powerOnBoot = true;
     };
+
+    nvidia = {
+      open = true;
+      modesetting.enable = true;
+      package = config.boot.kernelPackages.nvidiaPackages.stable;
+    };
+
     graphics = {
       enable = true;
       enable32Bit = true;
@@ -59,6 +57,7 @@ in {
       enable = true;
       displayManager.lightdm.enable = true;
       wacom.enable = false;
+      videoDrivers = ["nvidia"];
     };
 
     udisks2.enable = true;
@@ -154,11 +153,19 @@ in {
     };
   };
 
-  users.users.hartie = {
-    isNormalUser = true;
-    description = "hartie";
-    extraGroups = ["networkmanager" "wheel" "video" "audio"];
-    shell = pkgs.fish;
+  users.users = {
+    hartie = {
+      isNormalUser = true;
+      description = "hartie";
+      extraGroups = ["networkmanager" "wheel" "video" "audio"];
+      shell = pkgs.fish;
+    };
+    kot = {
+      isNormalUser = true;
+      description = "kot";
+      extraGroups = ["networkmanager" "video" "audio"];
+      shell = pkgs.fish;
+    };
   };
 
   programs = {
@@ -170,10 +177,7 @@ in {
       wrapperFeatures.gtk = true;
     };
 
-    steam = {
-      enable = true;
-    };
-
+    steam.enable = true;
     nix-ld.enable = true;
   };
 
@@ -203,6 +207,7 @@ in {
         # Development
         ghc
         dotnet-sdk
+        omnisharp-roslyn
         gcc
         python3
         # Terminal

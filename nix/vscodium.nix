@@ -46,6 +46,11 @@
         "glsllint.additionalStageAssociations" = {
           "glsl" = "vert";
         };
+
+        "dotnet.server.useOmnisharp" = true;
+        "omnisharp.enableImportCompletion" = true;
+        "dotnet.completion.showCompletionItemsFromUnimportedNamespaces" = true;
+        "omnisharp.path" = "omnisharp";
       };
 
       keybindings = [

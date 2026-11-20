@@ -11,57 +11,21 @@
     ./waybar.nix
   ];
   home = {
-    username = "hartie";
-    homeDirectory = "/home/hartie";
+    username = "kot";
+    homeDirectory = "/home/ot";
 
     packages = with pkgs; [
       # General
+      firefox
       vlc
-      vesktop # Discord
-      telegram-desktop
 
       # Fonts
       courier-prime
-
-      # VSCodium
-      vscodium
-      ruff
-      clang-tools
-      alejandra
-      jdk
-      cmake
-      gcc
-      glslang
-
-      # Photo
-      krita
-      digikam
-      xnviewmp
-
-      # File
-      obsidian
-      kdePackages.dolphin
-
-      # Git
-      lazygit
-      gh
-
       # Clipboard and Screenshot
       wl-clipboard
       grim
       slurp
     ];
-
-    file = {
-      ".local/bin/mkdev" = {
-        source = ./../scripts/mkdev.sh;
-        executable = true;
-      };
-      ".local/bin/update" = {
-        source = ./../scripts/update.sh;
-        executable = true;
-      };
-    };
 
     sessionPath = [
       "$HOME/.local/bin"
@@ -137,38 +101,9 @@
     };
   };
 
-  xdg = {
-    desktopEntries.xnviewmp = {
-      name = "XnView MP";
-      comment = "Graphic file viewer and converter";
-      exec = "xnviewmp %F";
-      terminal = false;
-      categories = ["Graphics" "Viewer"];
-      mimeType = ["image/jpeg" "image/png" "image/gif" "image/tiff" "image/webp"];
-    };
-
-    userDirs = {
-      enable = true;
-      createDirectories = true;
-      setSessionVariables = true;
-      download = "${config.home.homeDirectory}/downloads";
-      pictures = "${config.home.homeDirectory}/2_media/TOSORT";
-      videos = "${config.home.homeDirectory}/2_media/TOSORT";
-      music = "${config.home.homeDirectory}/2_media/TOSORT";
-      desktop = "${config.home.homeDirectory}/4_inbox/0_desktop";
-      documents = "${config.home.homeDirectory}/4_inbox/1_inbox";
-      projects = "${config.home.homeDirectory}/4_inbox/1_inbox";
-      templates = "${config.home.homeDirectory}/4_inbox/1_inbox";
-      publicShare = "${config.home.homeDirectory}/4_inbox/1_inbox";
-    };
-  };
-
   programs = {
     home-manager.enable = true;
-    zen-browser = {
-      enable = true;
-      setAsDefaultBrowser = true;
-    };
   };
+
   home.stateVersion = "24.11";
 }
