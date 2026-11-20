@@ -43,12 +43,17 @@
       modules = [
         ./hardware-configuration.nix
         ../configuration.nix
-        {
+        ({pkgs, ...}: {
           boot.loader = {
             systemd-boot.enable = true;
             efi.canTouchEfiVariables = true;
           };
-        }
+
+          hardware.graphics.extraPackages = with pkgs; [
+            intel-media-driver
+            vpl-gpu-rt
+          ];
+        })
         home-manager.nixosModules.home-manager
         {
           home-manager.useGlobalPkgs = true;

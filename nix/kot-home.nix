@@ -12,7 +12,7 @@
   ];
   home = {
     username = "kot";
-    homeDirectory = "/home/ot";
+    homeDirectory = "/home/kot";
 
     packages = with pkgs; [
       # General

@@ -33,7 +33,7 @@
       config.allowUnfree = true;
     };
   in {
-    nixosConfigurations.pc-hartie = nixpgs.lib.nixosSystem {
+    nixosConfigurations.pc-hartie = nixpkgs.lib.nixosSystem {
       inherit system;
       specialArgs = {
         system = system;
@@ -43,12 +43,36 @@
       modules = [
         ./hardware-configuration.nix
         ../configuration.nix
-        {
+        ({
+          config,
+          lib,
+          pkgs,
+          ...
+        }: {
           boot.loader = {
             systemd-boot.enable = true;
             efi.canTouchEfiVariables = true;
           };
-        }
+
+          hardware.nvidia = {
+            open = true;
+            modesetting.enable = true;
+            powerManagement.enable = false;
+            powerManagement.finegrained = false;
+            package = config.boot.kernelPackages.nvidiaPackages.stable;
+          };
+
+          programs.sway.extraOptions = ["--unsupported-gpu"];
+          services.greetd.settings.default_session.command =
+            lib.mkForce
+            "${pkgs.tuigreet}/bin/tuigreet --time --remember --remember-session --cmd 'sway --unsupported-gpu'";
+
+          services.xserver.videoDrivers = ["nvidia"];
+
+          environment.sessionVariables = {
+            WLR_NO_HARDWARE_CURSORS = "1";
+          };
+        })
         home-manager.nixosModules.home-manager
         {
           home-manager.useGlobalPkgs = true;

@@ -29,19 +29,9 @@ in {
       powerOnBoot = true;
     };
 
-    nvidia = {
-      open = true;
-      modesetting.enable = true;
-      package = config.boot.kernelPackages.nvidiaPackages.stable;
-    };
-
     graphics = {
       enable = true;
       enable32Bit = true;
-      extraPackages = with pkgs; [
-        intel-media-driver
-        vpl-gpu-rt
-      ];
     };
   };
 
@@ -53,11 +43,14 @@ in {
       touchpad.naturalScrolling = true;
     };
 
-    xserver = {
+    greetd = {
       enable = true;
-      displayManager.lightdm.enable = true;
-      wacom.enable = false;
-      videoDrivers = ["nvidia"];
+      settings = {
+        default_session = {
+          command = "${pkgs.tuigreet}/bin/tuigreet --time --remember --remember-session --cmd sway";
+          user = "greeter";
+        };
+      };
     };
 
     udisks2.enable = true;
@@ -76,7 +69,7 @@ in {
           "peer-device" = {
             # If we are on the PC, add the laptop as a peer. If on the laptop, add the PC.
             id =
-              if deviceName == "pc"
+              if deviceName == "hartie-pc"
               then deviceIds.laptop
               else deviceIds.pc;
           };
@@ -193,6 +186,7 @@ in {
         pavucontrol
         betterlockscreen
         linux-wallpaperengine
+        tuigreet
         # Dark Theme
         adwaita-qt
         adwaita-icon-theme

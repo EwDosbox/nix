@@ -58,11 +58,11 @@
         executable = true;
       };
       ".local/bin/update-pc" = {
-        source = ./../scripts/update.sh;
+        source = ./../scripts/update-pc.sh;
         executable = true;
       };
       ".local/bin/update-laptop" = {
-        source = ./../scripts/update.sh;
+        source = ./../scripts/update-laptop.sh;
         executable = true;
       };
     };
@@ -92,6 +92,13 @@
   };
 
   programs = {
+    home-manager.enable = true;
+
+    zen-browser = {
+      enable = true;
+      setAsDefaultBrowser = true;
+    };
+
     fish = {
       enable = true;
 
@@ -167,12 +174,5 @@
     };
   };
 
-  programs = {
-    home-manager.enable = true;
-    zen-browser = {
-      enable = true;
-      setAsDefaultBrowser = true;
-    };
-  };
   home.stateVersion = "24.11";
 }
